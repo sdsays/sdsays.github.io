@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-07-27 Sat 17:44 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wrapping Standard Library Function in C</title>
+<meta name="author" content="sd" />
+<meta name="generator" content="Org Mode" />
+
+<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<h1 id="site-title">śaṅkaradāsa</h1>
+<div id="nav">
+  <a href="/">hOMe</a> |
+  <a href="/posts">Posts</a>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Wrapping Standard Library Function in C</h1>
+<p>
+It is straightforward to put print messages in user defined functions (for debugging or for logging purposes) but what if you want to do something similar to standard library functions? It is not that difficult either. GNU Linker's(ld) &#x2013;wrap=symbol option helps achieving this.
+</p>
+
+<p>
+Suppose, you want to wrap strlen. Here is the scheme:
+</p>
+
+<ul class="org-ul">
+<li>The program will be compiled with following linker option: -Wl,&#x2013;wrap=strlen</li>
+<li>Call the strlen as-is in your program</li>
+<li>Define _<sub>wrap</sub><sub>strlen</sub> with the same prototype as strlen. Do whatever is desired inside this function and call _<sub>real</sub><sub>strlen</sub>. _<sub>real</sub><sub>strlen</sub> will call the actual library routine.</li>
+</ul>
+
+<p>
+Here is a complete example wrapping strlen:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+/* call to strlen will call __wrap_strlen first */
+size_t __wrap_strlen (const char *s)
+{
+        printf ("inside strlen wrapper\n");
+        /* lib's strlen call will happen with __real_strlen */
+        return __real_strlen (s);
+}
+
+int main (int argc, char *argv[])
+{
+        /* call to strlen remains as-is, and calls __wrap_strlen */
+        printf ("program's name length: %zu\n", strlen(argv[0]));
+        return 0;
+}
+</pre>
+</div>
+
+<p>
+Compile it as:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">$ gcc wrap_strlen.c -Wl,--wrap=strlen -o wrap_strlen
+</pre>
+</div>
+
+<p>
+Run:
+</p>
+
+<pre class="example">
+$ ./wrap_strlen
+inside strlen wrapper
+program's name length: 13
+</pre>
+
+<p>
+Here is what ld info page says which is self-explanatory:
+</p>
+
+<blockquote>
+<p>
+&#x2013;wrap=symbol
+</p>
+
+<p>
+Use a wrapper function for symbol.  Any undefined reference to symbol will be resolved to "_<sub>wrap</sub><sub>symbol</sub>".  Any undefined reference to
+"_<sub>real</sub><sub>symbol</sub>" will be resolved to symbol.
+</p>
+
+<p>
+This can be used to provide a wrapper for a system function.  The wrapper function should be called "_<sub>wrap</sub><sub>symbol</sub>".  If it wishes to
+call the system function, it should call "_<sub>real</sub><sub>symbol</sub>".
+</p>
+
+<p>
+Here is a trivial example:
+</p>
+
+<p>
+void *
+_<sub>wrap</sub><sub>malloc</sub> (size<sub>t</sub> c)
+{
+  printf ("malloc called with %zu\n", c);
+  return _<sub>real</sub><sub>malloc</sub> (c);
+}
+</p>
+
+<p>
+If you link other code with this file using &#x2013;wrap malloc, then all calls to "malloc" will call the function "_<sub>wrap</sub><sub>malloc</sub>" instead.
+The call to "_<sub>real</sub><sub>malloc</sub>" in "_<sub>wrap</sub><sub>malloc</sub>" will call the real "malloc" function.
+</p>
+
+<p>
+You may wish to provide a "_<sub>real</sub><sub>malloc</sub>" function as well, so that links without the &#x2013;wrap option will succeed.  If you do this, you
+should not put the definition of "_<sub>real</sub><sub>malloc</sub>" in the same file as "_<sub>wrap</sub><sub>malloc</sub>"; if you do, the assembler may resolve the call
+before the linker has a chance to wrap it to "malloc".
+</p>
+</blockquote>
+
+<p>
+Well, short, wrapping it up!
+</p>
+</div>
+<div id="postamble" class="status">
+<div id="footer">
+  <p>Generated using Emacs Org-Mode</p>
+  <div id="nav">
+    <span>
+      &copy sdsays <script>document.write(new Date().getFullYear())</script>.
+      <a href="https://www.github.com/sdsays"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-07-27 Sat 17:44 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TCL Basics</title>
+<meta name="author" content="sd" />
+<meta name="generator" content="Org Mode" />
+
+<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+<div id="preamble" class="status">
+<h1 id="site-title">śaṅkaradāsa</h1>
+<div id="nav">
+  <a href="/">hOMe</a> |
+  <a href="/posts">Posts</a>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">TCL Basics</h1>
+
+<div id="outline-container-orge42760f" class="outline-2">
+<h2 id="orge42760f"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+TCL commands' general syntax is:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">cmd arg1 arg2 ... ;
+</pre>
+</div>
+<p>
+where cmd is any standard TCL command or user defined procedure. semicolon(;) is optional unless needed.
+</p>
+
+<p>
+For any command, you may type command name and press enter on TCL shell, TCL shows its required arguments. Parameters showing between questions marks(??) are optional e.g. puts:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">% puts
+wrong # args: should be "puts ?-nonewline? ?channelId? string"
+</pre>
+</div>
+
+<p>
+Here -nonewline and channelId are optional and carry their default (channelId is stdout) values.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc0adca6" class="outline-2">
+<h2 id="orgc0adca6"><span class="section-number-2">2.</span> Printing to stdout</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Command puts prints to stdout by default:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">puts "Hello World!"
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf0dd7ed" class="outline-2">
+<h2 id="orgf0dd7ed"><span class="section-number-2">3.</span> Comments</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Lines starting with hash (#) are considered as comments:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"># This line is a comment
+</pre>
+</div>
+<p>
+For inline comment, the statement should be terminated with semicolon first:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">puts "some string"              ;# an inline comment, note the semicolon
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8eaf864" class="outline-2">
+<h2 id="org8eaf864"><span class="section-number-2">4.</span> Variables and Expressions</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Variables are defined using set command. They can be dereferenced either with $varname or by set command:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set foo 1                       ;# defining variable
+set foo_val $foo                ;# getting its value with $
+set foo_val [set foo]           ;# getting value with set
+</pre>
+</div>
+<p>
+Note the use of brackets []. TCL evaluates anything between [], which is further substituted with the result produced. There is an exception, if [] is inside braces i.e. {[]}, it doesn't get evaluated.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set foo_val {[set foo]}         ;# foo_val will contain [set foo]
+</pre>
+</div>
+<p>
+but, there is eval command which interprets its arguments first and then the whole statement is reinterpreted:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">eval set foo_val {[set foo]}    ;# foo_val now contains 1 as it first becomes set foo_val [set foo]
+</pre>
+</div>
+
+<p>
+Double quotes ("") and braces({}) both are used for grouping. The difference between the two is that words inside double quotes are evaluated but not when inside braces:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set foo 1
+puts "foo = $foo"               ;# will output foo = 1
+puts {foo = $foo}               ;# will output foo = $foo
+</pre>
+</div>
+
+<blockquote>
+<p>
+Question: eval on puts {foo = $foo} will throw error. Do you know why?
+</p>
+</blockquote>
+
+<p>
+The expr program is used to perform arithmetic:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set foo [expr {2.0**3 + 5/5 - 2*3}] ;# 3.0
+expr {int($foo)}                    ;# 3
+expr {22/7}                         ;# 3
+expr {22.0/7}                       ;# 3.142857142857143
+</pre>
+</div>
+
+<blockquote>
+<p>
+Always enclose expression for expr with braces {}. See explanation here
+</p>
+</blockquote>
+
+<p>
+We saw how to print string only with puts. format command is used to print a formatted output
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">puts [format "int:%d hex:%#010x float:%3.1f" 12321 12321 1.2321] ;# int:12321 hex:0x00003021 float:1.2
+puts [format {int:%d hex:%#010x float:%3.1f} 12321 12321 1.2321] ;# int:12321 hex:0x00003021 float:1.2
+</pre>
+</div>
+
+<p>
+Note that "" and {}, both doing the job for format. This is because we just needed grouping here, no evaluation.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org03a4cc8" class="outline-2">
+<h2 id="org03a4cc8"><span class="section-number-2">5.</span> Procedures  Functions</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Procedures(Functions) are defined with proc command. Please note that proc (and other constructs which require braces for body) requires opening brace for body i.e. { on the same line as the command. So, there is only one correct way to do it!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"># definition
+proc fact {n} {
+
+    if {$n == 1} {
+        return 1
+    }
+    return [expr {$n * [fact [expr {$n-1}]]}]
+}
+
+# call fact now
+fact 5                          ;# 120
+</pre>
+</div>
+
+<p>
+Did you notice? After defining proc, it is used like any other standard TCL command!
+</p>
+
+<p>
+Default values for parameters is defined with the help of extra braces {}.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">proc print {str {indent 4}} {
+
+    puts [format "%s%s" [string repeat " " $indent] $str]
+}
+print "with default indentation"    ;#    with default indentation
+print "with 8 spaces indentation" 8 ;#        with 8 spaces indentation
+</pre>
+</div>
+
+<blockquote>
+<p>
+Only trailing parameters (yes, multiple) can be optional. Definition with an optional parameter and then a mandatory parameter, will not make first parameter optional.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org5ffc090" class="outline-2">
+<h2 id="org5ffc090"><span class="section-number-2">6.</span> Control flow</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Control flow is supported with if-elseif-else, switch, for, foreach, while, break and continue constructs.
+</p>
+
+<p>
+The expression inside {} for if, for and while statements is already evaluated by expr program, so no need to write it explicitly. Let's go through one example of each:
+</p>
+</div>
+
+<div id="outline-container-org68fe0b4" class="outline-3">
+<h3 id="org68fe0b4"><span class="section-number-3">6.1.</span> if-elseif-else</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<pre class="src src-tcl">if {!($num % 2)} {
+    puts "num: $num is divisible by 2"
+} elseif {!($num % 3)} {
+    puts "num: $num is divisible by 3"
+} else {
+    puts "num: $num is not divisible by 2 or 3"
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfe1ab29" class="outline-3">
+<h3 id="orgfe1ab29"><span class="section-number-3">6.2.</span> switch</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Syntax:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">switch ?options? -- "some_string" {     ;# -- denotes end of options for switch so that some_string can contain - and not be treated as an option to switch
+    case0 {
+        statements
+    }
+    .
+    .
+    caseN {
+        statements
+    }
+    default {
+        default action or error handle
+    }
+}
+</pre>
+</div>
+<p>
+Example:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set i 3
+switch -- [expr {$i % 2}] {
+    0 {
+        puts "$i is even"
+    }
+    1 {
+        puts "$i is odd"
+    }
+    default {
+        error "Bad Exception!"
+    }
+}
+# 3 is odd
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1efc60d" class="outline-3">
+<h3 id="org1efc60d"><span class="section-number-3">6.3.</span> while</h3>
+<div class="outline-text-3" id="text-6-3">
+<div class="org-src-container">
+<pre class="src src-tcl">set i 10
+while {1} {                     ;# run forever
+    if {$i &lt; 1} {
+        break                   ;# exits loop if i is less than 1
+    }
+    if {$i % 2} {
+        incr i -1
+        continue                ;# continue for next iteration from here if i is odd
+    }
+    puts -nonewline "$i "       ;# prints i if even
+    incr i -1                   ;# decrements i
+}
+# 10 8 6 4 2
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org351d5da" class="outline-3">
+<h3 id="org351d5da"><span class="section-number-3">6.4.</span> for</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+General syntax:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">for {initialization} {run if expression is true} {execute on each iteration end} {
+}
+</pre>
+</div>
+
+<p>
+Example:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">for {set i 0} {$i &lt; 3} {incr i} {
+    puts -nonewline "$i "
+}
+
+# 1 2 3
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org05817d3" class="outline-3">
+<h3 id="org05817d3"><span class="section-number-3">6.5.</span> foreach</h3>
+<div class="outline-text-3" id="text-6-5">
+<div class="org-src-container">
+<pre class="src src-tcl">foreach i {1 2 3} {
+    puts -nonewline $i
+}
+# 123
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgcdabf92" class="outline-2">
+<h2 id="orgcdabf92"><span class="section-number-2">7.</span> Data Structures</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+We will look at three data structures now: string, list and array.
+</p>
+</div>
+
+<div id="outline-container-orga66b2ab" class="outline-3">
+<h3 id="orga66b2ab"><span class="section-number-3">7.1.</span> String</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+A string is initialized with double quotes (""):
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set foo_str "this is a string"
+</pre>
+</div>
+
+<p>
+You may perform operations on strings with string command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">string length $foo_str          ;# returns total no. of characters in string. Here, 16
+string reverse $foo_str         ;# returns reversed string. Here, gnirts a si siht
+string range $foo_str 0 end     ;# returns a sub string. end refers to last char in string. Here, full string
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org230f028" class="outline-3">
+<h3 id="org230f028"><span class="section-number-3">7.2.</span> List</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+List is like an array in C. Initialize a list variable as
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">set foo_list {item1 item2 item3}
+</pre>
+</div>
+
+<p>
+or as follows which allows to put inline comments or some variable which is not directly possible with above syntax.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">set foo_list [list]
+lappend foo_list "item1"        ;# some comment
+lappend foo_list "item2"
+lappend foo_list "item3"
+</pre>
+</div>
+
+<p>
+Iterating over a list:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">foreach item $foo_list {
+    puts $item
+}
+
+or:
+
+for {set i 0} {$i &lt; [llength $foo_list]} {incr i} {
+    puts "$i: [lindex $foo_list $i]"
+}
+# 0: item1
+# 1: item2
+# 2: item3
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc5ceb25" class="outline-3">
+<h3 id="orgc5ceb25"><span class="section-number-3">7.3.</span> Array</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+Array is like hash which carries key-value pair for its items. An array is initialized with array set command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">array set foo_arr {a 97 b 98 2 4 3 9}
+</pre>
+</div>
+
+<p>
+Dereferencing array elements:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">array get foo_arr               ;# a 97 2 4 b 98 3 9
+puts $foo_arr(a)                ;# 97
+</pre>
+</div>
+
+<p>
+Iterate over array elements:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">foreach {k v} [array get foo_arr] {
+    puts "key: $k, value: $v"
+}
+# key: a, value: 97
+# key: 2, value: 4
+# key: b, value: 98
+# key: 3, value: 9
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga21f1b8" class="outline-2">
+<h2 id="orga21f1b8"><span class="section-number-2">8.</span> File handling</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+The open and close commands are used to open and close files respectively. open returns a channel no.(file descriptor) to work with.
+</p>
+</div>
+
+<div id="outline-container-orgfd0830f" class="outline-3">
+<h3 id="orgfd0830f"><span class="section-number-3">8.1.</span> Writing:</h3>
+<div class="outline-text-3" id="text-8-1">
+<div class="org-src-container">
+<pre class="src src-tcl">set fd [open "gv.txt" w]
+puts $fd "line 1"
+puts $fd "line 2"
+close $fd
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4dcc1e8" class="outline-3">
+<h3 id="org4dcc1e8"><span class="section-number-3">8.2.</span> Reading:</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<pre class="src src-tcl">set fd [open "gv.txt" r]
+while {[gets $fd rd_line] &gt;= 0} {
+    puts $rd_line
+}
+close $fd
+</pre>
+</div>
+
+<p>
+Three channels i.e. stdin, stdout and stderr are opened by default. You may use these directly.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">puts stderr "some warning or error" ;# prints message on stderr
+set foo [gets stdin]                ;# prompts user to input value for foo
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1980138" class="outline-2">
+<h2 id="org1980138"><span class="section-number-2">9.</span> Exceptions</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+For robustness of our code, we should catch any possible exceptions and work accordingly. catch command helps in catching exceptions:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">if {[catch {expr {1/0}} err_msg]} {
+    error "error in expression: $err_msg"
+}
+# error in expression: divide by zero
+</pre>
+</div>
+
+<p>
+Note that catch returns 0 if there is no exception, else 1. Corresponding error message is captured in err<sub>msg</sub>. error command reports the error on stderr and <i>aborts</i> the execution.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf81f805" class="outline-2">
+<h2 id="orgf81f805"><span class="section-number-2">10.</span> Running a script</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+TCL scripts are regular text files and generally carry <code>.tcl</code> extension. source command helps evaluates a script in a running TCL interpreter. So, you can have your custom procs in one file and source it in your main file:
+</p>
+
+<p>
+file myprocs.tcl:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">proc fact {n} {
+
+    if {$n == 1} {
+        return 1
+    }
+    return [expr {$n * [fact [expr {$n-1}]]}]
+}
+</pre>
+</div>
+
+<p>
+file main.tcl: argc variable contains the no. of commandline arguments passed and argv list variable contains the arguments.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">#!/usr/bin/env tclsh
+
+# argument checking
+if {$argc &lt; 1} {
+    error "pass an integer"
+} elseif {$argc &gt; 1} {
+    error "too many arguments, pass just one integer"
+} else {
+    # check if argument is integer or not
+    set num [lindex $argv 0]
+    if {![string is integer $num]} {
+        error "$num is not an integer"
+    }
+}
+
+source ./myprocs.tcl
+
+puts "factorial of $num: [fact $num]"
+</pre>
+</div>
+
+<p>
+Running script on bash shell:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">&gt; ls
+main.tcl  myprocs.tcl
+&gt; chmod u+x main.tcl
+&gt; ./main.tcl 5
+factorial of 5: 120
+</pre>
+</div>
+
+<p>
+This is just basic introduction to TCL but I hope it will get you started! Thanks!
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="footer">
+  <p>Generated using Emacs Org-Mode</p>
+  <div id="nav">
+    <span>
+      &copy sdsays <script>document.write(new Date().getFullYear())</script>.
+      <a href="https://www.github.com/sdsays"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+</div>
+</body>
+</html>

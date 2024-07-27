@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-07-27 Sat 17:44 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs: Getting Started</title>
+<meta name="author" content="sd" />
+<meta name="generator" content="Org Mode" />
+
+<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+<div id="preamble" class="status">
+<h1 id="site-title">śaṅkaradāsa</h1>
+<div id="nav">
+  <a href="/">hOMe</a> |
+  <a href="/posts">Posts</a>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Emacs: Getting Started</h1>
+
+<div id="outline-container-org69f027c" class="outline-2">
+<h2 id="org69f027c"><span class="section-number-2">1.</span> About Emacs</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.gnu.org/software/emacs/">Emacs</a> is a <a href="https://www.gnu.org/home.en.html">GNU</a> project. Quoting from its website:
+</p>
+
+<blockquote>
+<p>
+An extensible, customizable, free/libre text editor — and more.
+At its core is an interpreter for Emacs Lisp, a dialect of the Lisp programming
+language with extensions to support text editing.
+</p>
+</blockquote>
+
+<ul class="org-ul">
+<li>text editor: It can be treated as a normal text editor. Agreed, using key
+combinations would be a little hassle initially, but it will pay in long run</li>
+<li>customizable: We may customize it to our taste; theme, adding desired packages
+from central repository and customizing them etc.</li>
+<li>extensible: we may write our own packages and use them. In which language? Emacs
+Lisp. Good news is that you would make most of Emacs without diving into the details
+of it</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgddc9b39" class="outline-2">
+<h2 id="orgddc9b39"><span class="section-number-2">2.</span> Why Emacs?</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Writing neat code, meeting standards, is mandatory for easier reading and code reviews.
+Remember, code is read more than being written. Spending time on aesthetics of code,
+though desired, is not feasible for a programmer when one is going through the time
+crunch of delivery. So, it is desirable to have a development platform which can provide
+seem-less aide to the developer.
+Not just this, the development platform should enable developer with advanced editing
+capabilities, code browsing and assistance with language constructs.
+</p>
+
+<p>
+Language specific IDEs (Integrated Development Environment) exist and some of them
+also provide plugins for other languages support. What these IDEs lack is advanced
+editing capabilities, and, as a programmer we just don't code for a specific language.
+We have to switch projects, do porting and even write documentation. Also, anything
+the way it is delivered doesn't suit the tastes of all. So, we need user specific
+customization. Emacs and vi are two such editors which have been catering to all these
+requirements for decades. They still shine out because of their dynamic design and both
+are backed up by a strong community of contributors.
+</p>
+
+<p>
+So, if you are looking for a true programming platform, it is either Emacs or vi.
+I won't go into the debate of which one is better. My personal choice is Emacs.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org88587ab" class="outline-2">
+<h2 id="org88587ab"><span class="section-number-2">3.</span> Learning Resources</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+There are many resources available but I would recommend to take <a href="https://www.gnu.org/software/emacs/tour/">a guided tour</a> of
+Emacs from official website. This will give you some ideas of its features.
+</p>
+
+<p>
+<a href="http://tuhdo.github.io/index.html">Emacs mini manual</a> by Tu Do is a good read once you have acquainted yourself with
+Emacs a bit.
+</p>
+
+<p>
+Then, there are some notable resources for the things we need off and on:
+</p>
+<ul class="org-ul">
+<li><a href="http://emacsrocks.com/">Emacs Rocks!</a> indeed</li>
+<li><a href="http://emacs-fu.blogspot.com/">emacs-fu</a></li>
+<li><a href="https://www.masteringemacs.org/all-articles">Mastering Emacs</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb6cfb64" class="outline-2">
+<h2 id="orgb6cfb64"><span class="section-number-2">4.</span> Installation</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+The latest version on Emacs is <code>26.1</code>. It is better to use the latest version to
+leverage the latest packages.
+</p>
+
+<p>
+If you are using a GNU/Linux distribution, chances are that you already have Emacs
+as a part of it. But, most likely it won't be latest. So, you will have to build
+from Source. Here are the <a href="http://tuhdo.github.io/emacs-tutor.html#orgheadline6">installation steps</a> from Tu Do's tutorial. You may browse
+web for any issues you face or you may also write to me.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ace6bd" class="outline-2">
+<h2 id="org9ace6bd"><span class="section-number-2">5.</span> Configuration</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Default/Vanilla Emacs is fine but adding customizations (libraries, commands etc.)
+makes it more fun to use. So, users develop their own set of Emacs configuration.
+I have my own emacs configuration too: not strictly mine as it has been borrowed from many.
+But, it suites my taste.
+</p>
+
+<ul class="org-ul">
+<li>Clone the repository in your home dir as:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bash">$ git clone git@github.com:sdsays/emacsd-gv.git .emacs.d
+</pre>
+</div>
+<ul class="org-ul">
+<li>Edit ~/.emacs.d/gv/gv-user.el accordingly</li>
+<li>That't! Launch Emacs. It will fetch all the required packages from (M)ELPA and install them</li>
+</ul>
+
+
+<div id="org7516167" class="figure">
+<p><img src="../img/emacs.png" alt="emacs.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Emacs start up screen</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga8044c6" class="outline-2">
+<h2 id="orga8044c6"><span class="section-number-2">6.</span> Getting Started Command Set</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li>Keys Short cuts:
+<ul class="org-ul">
+<li><code>C</code>: Ctrl</li>
+<li><code>M</code>: Alt/Meta</li>
+<li><code>SPC</code>: Space bar</li>
+<li><code>RET</code>: Return/Enter</li>
+</ul></li>
+<li>Where we edit text, is called Emacs buffer which can be saved to a file</li>
+<li>Emacs has a mini buffer, in the bottom where you type commands (with args)</li>
+<li><code>C-&lt;key&gt;</code> <code>-</code> means you to have to press <code>C</code> and <code>&lt;key&gt;</code> together</li>
+<li><code>C-&lt;key1&gt; &lt;key2&gt;</code> <code>" "</code> (space) means you have to release previous keys and press &lt;key2&gt; separately</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Command</th>
+<th scope="col" class="org-left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C-x-f &lt;myfile&gt;</td>
+<td class="org-left">Find/open a <code>myfile</code> in buffer. You may type few chars and it will match file, then press <code>RET</code></td>
+</tr>
+
+<tr>
+<td class="org-left">C-x-s</td>
+<td class="org-left">Save buffer to file</td>
+</tr>
+
+<tr>
+<td class="org-left">C-f</td>
+<td class="org-left">Move forward one char or <code>right arrow key</code></td>
+</tr>
+
+<tr>
+<td class="org-left">C-b</td>
+<td class="org-left">Move backward one char or <code>left arrow key</code></td>
+</tr>
+
+<tr>
+<td class="org-left">C-p</td>
+<td class="org-left">Move to previous line or <code>up arrow key</code></td>
+</tr>
+
+<tr>
+<td class="org-left">C-n</td>
+<td class="org-left">Move to next line or <code>down arrow key</code></td>
+</tr>
+
+<tr>
+<td class="org-left">M-f</td>
+<td class="org-left">Move forward one word</td>
+</tr>
+
+<tr>
+<td class="org-left">M-b</td>
+<td class="org-left">Move backward one word</td>
+</tr>
+
+<tr>
+<td class="org-left">C-a</td>
+<td class="org-left">Move to beginning of line</td>
+</tr>
+
+<tr>
+<td class="org-left">C-e</td>
+<td class="org-left">Move to end of line</td>
+</tr>
+
+<tr>
+<td class="org-left">M-a</td>
+<td class="org-left">Move to beginning of sentence</td>
+</tr>
+
+<tr>
+<td class="org-left">M-e</td>
+<td class="org-left">Move to end of sentence</td>
+</tr>
+
+<tr>
+<td class="org-left">C-v</td>
+<td class="org-left">Move forward one screenful</td>
+</tr>
+
+<tr>
+<td class="org-left">M-v</td>
+<td class="org-left">Move backward one screenful</td>
+</tr>
+
+<tr>
+<td class="org-left">C-l</td>
+<td class="org-left">Moves cursor location to middle, top, bottom on multiple presses</td>
+</tr>
+
+<tr>
+<td class="org-left">M-&lt;</td>
+<td class="org-left">Move to beginning of buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">M-&gt;</td>
+<td class="org-left">Move to end of buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">M-g-g &lt;line<sub>num</sub>&gt;</td>
+<td class="org-left">go to line no. <code>line_num</code></td>
+</tr>
+
+<tr>
+<td class="org-left">C-d</td>
+<td class="org-left">delete char at cursor</td>
+</tr>
+
+<tr>
+<td class="org-left">M-d</td>
+<td class="org-left">delete word starting from cursor</td>
+</tr>
+
+<tr>
+<td class="org-left">C-w</td>
+<td class="org-left">delete current line or selected region with <code>C-s</code></td>
+</tr>
+
+<tr>
+<td class="org-left">M-w</td>
+<td class="org-left">copy current line or selected region with <code>C-s</code></td>
+</tr>
+
+<tr>
+<td class="org-left">M-c</td>
+<td class="org-left">duplicate current line just next to current line</td>
+</tr>
+
+<tr>
+<td class="org-left">C-SPC</td>
+<td class="org-left">Starts the selection-&gt;move with movement commands-&gt;delete/copy region</td>
+</tr>
+
+<tr>
+<td class="org-left">C-u &lt;count&gt; &lt;command&gt;</td>
+<td class="org-left">Command is repeated <code>count</code> no. of times. e.g. <code>C-u 16 C-n</code> moves forward 16 lines</td>
+</tr>
+
+<tr>
+<td class="org-left">C-s &lt;word&gt;</td>
+<td class="org-left">Search <code>word</code> forward in buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">C-r &lt;word&gt;</td>
+<td class="org-left">Search <code>word</code> backward in buffer</td>
+</tr>
+
+<tr>
+<td class="org-left">M-n</td>
+<td class="org-left">Search symbol at point forward</td>
+</tr>
+
+<tr>
+<td class="org-left">M-p</td>
+<td class="org-left">Search symbol at point backward</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>
+Initially, things might look difficult but if we start and practice, it becomes a habit.
+</p>
+</blockquote>
+
+<p>
+In future articles, we will learn about advanced editing, using Emacs for various
+programming languages, project management and using <a href="https://orgmode.org/">Emacs Org Mode.</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="footer">
+  <p>Generated using Emacs Org-Mode</p>
+  <div id="nav">
+    <span>
+      &copy sdsays <script>document.write(new Date().getFullYear())</script>.
+      <a href="https://www.github.com/sdsays"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+</div>
+</body>
+</html>
