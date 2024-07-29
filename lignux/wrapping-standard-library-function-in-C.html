@@ -3,14 +3,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-07-28 Sun 22:12 -->
+<!-- 2024-07-29 Mon 22:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Wrapping Standard Library Function in C</title>
 <meta name="author" content="sd" />
 <meta name="generator" content="Org Mode" />
 
-<link rel="stylesheet" type="text/css" href="https://gongzhitaao.org/orgcss/org.css"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hanuman|Georgia|Helvetica|monospace">
+<link rel="stylesheet" type="text/css" href="/static/gongzhitaao.css"/>
+<link rel="stylesheet" type="text/css" href="/static/sd.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 <!-- Google tag (gtag.js) -->
@@ -59,8 +61,9 @@
 <div id="preamble" class="status">
 <h1 id="site-title">śaṅkaradāsa</h1>
 <div id="nav">
-  <a href="/">hOMe</a> |
-  <a href="/posts">Posts</a>
+  <a href="/">About</a> |
+  <a href="/vedanta">Vedãnta</a> |
+  <a href="/lignux">LiGNUx</a>
 </div>
 </div>
 <div id="content" class="content">
@@ -84,22 +87,22 @@ Here is a complete example wrapping strlen:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-c">#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
+<pre class="src src-c"><span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;stdio.h&gt;</span>
+<span style="font-weight: bold;">#include</span> <span style="font-style: italic;">&lt;string.h&gt;</span>
 
-/* call to strlen will call __wrap_strlen first */
-size_t __wrap_strlen (const char *s)
+<span style="font-weight: bold; font-style: italic;">/* </span><span style="font-weight: bold; font-style: italic;">call to strlen will call __wrap_strlen first</span><span style="font-weight: bold; font-style: italic;"> */</span>
+<span style="font-weight: bold; text-decoration: underline;">size_t</span> <span style="font-weight: bold;">__wrap_strlen</span> (<span style="font-weight: bold;">const</span> <span style="font-weight: bold; text-decoration: underline;">char</span> *<span style="font-weight: bold; font-style: italic;">s</span>)
 {
-        printf ("inside strlen wrapper\n");
-        /* lib's strlen call will happen with __real_strlen */
-        return __real_strlen (s);
+        printf (<span style="font-style: italic;">"inside strlen wrapper\n"</span>);
+        <span style="font-weight: bold; font-style: italic;">/* </span><span style="font-weight: bold; font-style: italic;">lib's strlen call will happen with __real_strlen</span><span style="font-weight: bold; font-style: italic;"> */</span>
+        <span style="font-weight: bold;">return</span> __real_strlen (s);
 }
 
-int main (int argc, char *argv[])
+<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold;">main</span> (<span style="font-weight: bold; text-decoration: underline;">int</span> <span style="font-weight: bold; font-style: italic;">argc</span>, <span style="font-weight: bold; text-decoration: underline;">char</span> *<span style="font-weight: bold; font-style: italic;">argv</span>[])
 {
-        /* call to strlen remains as-is, and calls __wrap_strlen */
-        printf ("program's name length: %zu\n", strlen(argv[0]));
-        return 0;
+        <span style="font-weight: bold; font-style: italic;">/* </span><span style="font-weight: bold; font-style: italic;">call to strlen remains as-is, and calls __wrap_strlen</span><span style="font-weight: bold; font-style: italic;"> */</span>
+        printf (<span style="font-style: italic;">"program's name length: %zu\n"</span>, strlen(argv[0]));
+        <span style="font-weight: bold;">return</span> 0;
 }
 </pre>
 </div>

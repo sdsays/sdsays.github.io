@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-07-29 Mon 22:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TCL Basics</title>
+<meta name="author" content="sd" />
+<meta name="generator" content="Org Mode" />
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hanuman|Georgia|Helvetica|monospace">
+<link rel="stylesheet" type="text/css" href="/static/gongzhitaao.css"/>
+<link rel="stylesheet" type="text/css" href="/static/sd.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2RVEM8DBHH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2RVEM8DBHH');
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<h1 id="site-title">śaṅkaradāsa</h1>
+<div id="nav">
+  <a href="/">About</a> |
+  <a href="/vedanta">Vedãnta</a> |
+  <a href="/lignux">LiGNUx</a>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">TCL Basics</h1>
+
+<div id="outline-container-org7955bfe" class="outline-2">
+<h2 id="org7955bfe"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+TCL commands' general syntax is:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl">cmd arg1 arg2 ... ;
+</pre>
+</div>
+<p>
+where cmd is any standard TCL command or user defined procedure. semicolon(;) is optional unless needed.
+</p>
+
+<p>
+For any command, you may type command name and press enter on TCL shell, TCL shows its required arguments. Parameters showing between questions marks(??) are optional e.g. puts:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl">% <span style="font-weight: bold;">puts</span>
+wrong # args: should be <span style="font-style: italic;">"puts ?-nonewline? ?channelId? string"</span>
+</pre>
+</div>
+
+<p>
+Here -nonewline and channelId are optional and carry their default (channelId is stdout) values.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1c1058a" class="outline-2">
+<h2 id="org1c1058a"><span class="section-number-2">2.</span> Printing to stdout</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Command puts prints to stdout by default:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"Hello World!"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6937989" class="outline-2">
+<h2 id="org6937989"><span class="section-number-2">3.</span> Comments</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Lines starting with hash (#) are considered as comments:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">This line is a comment</span>
+</pre>
+</div>
+<p>
+For inline comment, the statement should be terminated with semicolon first:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"some string"</span>              ;<span style="font-weight: bold; font-style: italic;"># an inline comment, note the semicolon</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0088b5a" class="outline-2">
+<h2 id="org0088b5a"><span class="section-number-2">4.</span> Variables and Expressions</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Variables are defined using set command. They can be dereferenced either with $varname or by set command:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo</span> 1                       ;<span style="font-weight: bold; font-style: italic;"># defining variable</span>
+<span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo_val</span> $<span style="font-weight: bold; font-style: italic;">foo</span>                ;<span style="font-weight: bold; font-style: italic;"># getting its value with $</span>
+<span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo_val</span> [<span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo</span>]           ;<span style="font-weight: bold; font-style: italic;"># getting value with set</span>
+</pre>
+</div>
+<p>
+Note the use of brackets []. TCL evaluates anything between [], which is further substituted with the result produced. There is an exception, if [] is inside braces i.e. {[]}, it doesn't get evaluated.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo_val</span> {[<span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo</span>]}         ;<span style="font-weight: bold; font-style: italic;"># foo_val will contain [set foo]</span>
+</pre>
+</div>
+<p>
+but, there is eval command which interprets its arguments first and then the whole statement is reinterpreted:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">eval</span> <span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo_val</span> {[<span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo</span>]}    ;<span style="font-weight: bold; font-style: italic;"># foo_val now contains 1 as it first becomes set foo_val [set foo]</span>
+</pre>
+</div>
+
+<p>
+Double quotes ("") and braces({}) both are used for grouping. The difference between the two is that words inside double quotes are evaluated but not when inside braces:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo</span> 1
+<span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"foo = $foo"</span>               ;<span style="font-weight: bold; font-style: italic;"># will output foo = 1</span>
+<span style="font-weight: bold;">puts</span> {foo = $<span style="font-weight: bold; font-style: italic;">foo</span>}               ;<span style="font-weight: bold; font-style: italic;"># will output foo = $foo</span>
+</pre>
+</div>
+
+<blockquote>
+<p>
+Question: eval on puts {foo = $foo} will throw error. Do you know why?
+</p>
+</blockquote>
+
+<p>
+The expr program is used to perform arithmetic:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo</span> [<span style="font-weight: bold;">expr</span> {2.0**3 + 5/5 - 2*3}] ;<span style="font-weight: bold; font-style: italic;"># 3.0</span>
+<span style="font-weight: bold;">expr</span> {int($<span style="font-weight: bold; font-style: italic;">foo</span>)}                    ;<span style="font-weight: bold; font-style: italic;"># 3</span>
+<span style="font-weight: bold;">expr</span> {22/7}                         ;<span style="font-weight: bold; font-style: italic;"># 3</span>
+<span style="font-weight: bold;">expr</span> {22.0/7}                       ;<span style="font-weight: bold; font-style: italic;"># 3.142857142857143</span>
+</pre>
+</div>
+
+<blockquote>
+<p>
+Always enclose expression for expr with braces {}. See explanation here
+</p>
+</blockquote>
+
+<p>
+We saw how to print string only with puts. format command is used to print a formatted output
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">puts</span> [<span style="font-weight: bold;">format</span> <span style="font-style: italic;">"int:%d hex:%#010x float:%3.1f"</span> 12321 12321 1.2321] ;<span style="font-weight: bold; font-style: italic;"># int:12321 hex:0x00003021 float:1.2</span>
+<span style="font-weight: bold;">puts</span> [<span style="font-weight: bold;">format</span> {int:%d hex:%#010x float:%3.1f} 12321 12321 1.2321] ;<span style="font-weight: bold; font-style: italic;"># int:12321 hex:0x00003021 float:1.2</span>
+</pre>
+</div>
+
+<p>
+Note that "" and {}, both doing the job for format. This is because we just needed grouping here, no evaluation.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8d6f58e" class="outline-2">
+<h2 id="org8d6f58e"><span class="section-number-2">5.</span> Procedures  Functions</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Procedures(Functions) are defined with proc command. Please note that proc (and other constructs which require braces for body) requires opening brace for body i.e. { on the same line as the command. So, there is only one correct way to do it!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">definition</span>
+<span style="font-weight: bold;">proc</span> <span style="font-weight: bold;">fact</span> {n} {
+
+    <span style="font-weight: bold;">if</span> {$<span style="font-weight: bold; font-style: italic;">n</span> == 1} {
+        <span style="font-weight: bold;">return</span> 1
+    }
+    <span style="font-weight: bold;">return</span> [<span style="font-weight: bold;">expr</span> {$<span style="font-weight: bold; font-style: italic;">n</span> * [fact [<span style="font-weight: bold;">expr</span> {$<span style="font-weight: bold; font-style: italic;">n</span>-1}]]}]
+}
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">call fact now</span>
+fact 5                          ;<span style="font-weight: bold; font-style: italic;"># 120</span>
+</pre>
+</div>
+
+<p>
+Did you notice? After defining proc, it is used like any other standard TCL command!
+</p>
+
+<p>
+Default values for parameters is defined with the help of extra braces {}.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">proc</span> <span style="font-weight: bold;">print</span> {str {indent 4}} {
+
+    <span style="font-weight: bold;">puts</span> [<span style="font-weight: bold;">format</span> <span style="font-style: italic;">"%s%s"</span> [<span style="font-weight: bold;">string</span> repeat <span style="font-style: italic;">" "</span> $<span style="font-weight: bold; font-style: italic;">indent</span>] $<span style="font-weight: bold; font-style: italic;">str</span>]
+}
+print <span style="font-style: italic;">"with default indentation"</span>    ;<span style="font-weight: bold; font-style: italic;">#    with default indentation</span>
+print <span style="font-style: italic;">"with 8 spaces indentation"</span> 8 ;<span style="font-weight: bold; font-style: italic;">#        with 8 spaces indentation</span>
+</pre>
+</div>
+
+<blockquote>
+<p>
+Only trailing parameters (yes, multiple) can be optional. Definition with an optional parameter and then a mandatory parameter, will not make first parameter optional.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgf6f7d78" class="outline-2">
+<h2 id="orgf6f7d78"><span class="section-number-2">6.</span> Control flow</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Control flow is supported with if-elseif-else, switch, for, foreach, while, break and continue constructs.
+</p>
+
+<p>
+The expression inside {} for if, for and while statements is already evaluated by expr program, so no need to write it explicitly. Let's go through one example of each:
+</p>
+</div>
+
+<div id="outline-container-org2b978da" class="outline-3">
+<h3 id="org2b978da"><span class="section-number-3">6.1.</span> if-elseif-else</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">if</span> {!($<span style="font-weight: bold; font-style: italic;">num</span> % 2)} {
+    <span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"num: $num is divisible by 2"</span>
+} <span style="font-weight: bold;">elseif</span> {!($<span style="font-weight: bold; font-style: italic;">num</span> % 3)} {
+    <span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"num: $num is divisible by 3"</span>
+} <span style="font-weight: bold;">else</span> {
+    <span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"num: $num is not divisible by 2 or 3"</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5455c33" class="outline-3">
+<h3 id="org5455c33"><span class="section-number-3">6.2.</span> switch</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Syntax:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">switch</span> ?options? -- <span style="font-style: italic;">"some_string"</span> {     ;<span style="font-weight: bold; font-style: italic;"># -- denotes end of options for switch so that some_string can contain - and not be treated as an option to switch</span>
+    case0 {
+        statements
+    }
+    .
+    .
+    caseN {
+        statements
+    }
+    <span style="font-weight: bold;">default</span> {
+        <span style="font-weight: bold;">default</span> action or <span style="font-weight: bold;">error</span> handle
+    }
+}
+</pre>
+</div>
+<p>
+Example:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">i</span> 3
+<span style="font-weight: bold;">switch</span> -- [<span style="font-weight: bold;">expr</span> {$<span style="font-weight: bold; font-style: italic;">i</span> % 2}] {
+    0 {
+        <span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"$i is even"</span>
+    }
+    1 {
+        <span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"$i is odd"</span>
+    }
+    <span style="font-weight: bold;">default</span> {
+        <span style="font-weight: bold;">error</span> <span style="font-style: italic;">"Bad Exception!"</span>
+    }
+}
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">3 is odd</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org17f57dd" class="outline-3">
+<h3 id="org17f57dd"><span class="section-number-3">6.3.</span> while</h3>
+<div class="outline-text-3" id="text-6-3">
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">i</span> 10
+<span style="font-weight: bold;">while</span> {1} {                     ;<span style="font-weight: bold; font-style: italic;"># run forever</span>
+    <span style="font-weight: bold;">if</span> {$<span style="font-weight: bold; font-style: italic;">i</span> &lt; 1} {
+        <span style="font-weight: bold;">break</span>                   ;<span style="font-weight: bold; font-style: italic;"># exits loop if i is less than 1</span>
+    }
+    <span style="font-weight: bold;">if</span> {$<span style="font-weight: bold; font-style: italic;">i</span> % 2} {
+        <span style="font-weight: bold;">incr</span> i -1
+        <span style="font-weight: bold;">continue</span>                ;<span style="font-weight: bold; font-style: italic;"># continue for next iteration from here if i is odd</span>
+    }
+    <span style="font-weight: bold;">puts</span> -nonewline <span style="font-style: italic;">"$i "</span>       ;<span style="font-weight: bold; font-style: italic;"># prints i if even</span>
+    <span style="font-weight: bold;">incr</span> i -1                   ;<span style="font-weight: bold; font-style: italic;"># decrements i</span>
+}
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">10 8 6 4 2</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org334c5de" class="outline-3">
+<h3 id="org334c5de"><span class="section-number-3">6.4.</span> for</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+General syntax:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">for</span> {initialization} {run <span style="font-weight: bold;">if</span> expression is true} {execute on each iteration end} {
+}
+</pre>
+</div>
+
+<p>
+Example:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">for</span> {<span style="font-weight: bold;">set</span> i 0} {$<span style="font-weight: bold; font-style: italic;">i</span> &lt; 3} {<span style="font-weight: bold;">incr</span> i} {
+    <span style="font-weight: bold;">puts</span> -nonewline <span style="font-style: italic;">"$i "</span>
+}
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">1 2 3</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org754c938" class="outline-3">
+<h3 id="org754c938"><span class="section-number-3">6.5.</span> foreach</h3>
+<div class="outline-text-3" id="text-6-5">
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">foreach</span> i {1 2 3} {
+    <span style="font-weight: bold;">puts</span> -nonewline $<span style="font-weight: bold; font-style: italic;">i</span>
+}
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">123</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgdfbcde7" class="outline-2">
+<h2 id="orgdfbcde7"><span class="section-number-2">7.</span> Data Structures</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+We will look at three data structures now: string, list and array.
+</p>
+</div>
+
+<div id="outline-container-org340b7fc" class="outline-3">
+<h3 id="org340b7fc"><span class="section-number-3">7.1.</span> String</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+A string is initialized with double quotes (""):
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo_str</span> <span style="font-style: italic;">"this is a string"</span>
+</pre>
+</div>
+
+<p>
+You may perform operations on strings with string command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">string</span> length $<span style="font-weight: bold; font-style: italic;">foo_str</span>          ;<span style="font-weight: bold; font-style: italic;"># returns total no. of characters in string. Here, 16</span>
+<span style="font-weight: bold;">string</span> reverse $<span style="font-weight: bold; font-style: italic;">foo_str</span>         ;<span style="font-weight: bold; font-style: italic;"># returns reversed string. Here, gnirts a si siht</span>
+<span style="font-weight: bold;">string</span> range $<span style="font-weight: bold; font-style: italic;">foo_str</span> 0 end     ;<span style="font-weight: bold; font-style: italic;"># returns a sub string. end refers to last char in string. Here, full string</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9a4eb93" class="outline-3">
+<h3 id="org9a4eb93"><span class="section-number-3">7.2.</span> List</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+List is like an array in C. Initialize a list variable as
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo_list</span> {item1 item2 item3}
+</pre>
+</div>
+
+<p>
+or as follows which allows to put inline comments or some variable which is not directly possible with above syntax.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo_list</span> [<span style="font-weight: bold;">list</span>]
+<span style="font-weight: bold;">lappend</span> foo_list <span style="font-style: italic;">"item1"</span>        ;<span style="font-weight: bold; font-style: italic;"># some comment</span>
+<span style="font-weight: bold;">lappend</span> foo_list <span style="font-style: italic;">"item2"</span>
+<span style="font-weight: bold;">lappend</span> foo_list <span style="font-style: italic;">"item3"</span>
+</pre>
+</div>
+
+<p>
+Iterating over a list:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">foreach</span> item $<span style="font-weight: bold; font-style: italic;">foo_list</span> {
+    <span style="font-weight: bold;">puts</span> $<span style="font-weight: bold; font-style: italic;">item</span>
+}
+
+or:
+
+<span style="font-weight: bold;">for</span> {<span style="font-weight: bold;">set</span> i 0} {$<span style="font-weight: bold; font-style: italic;">i</span> &lt; [<span style="font-weight: bold;">llength</span> $<span style="font-weight: bold; font-style: italic;">foo_list</span>]} {<span style="font-weight: bold;">incr</span> i} {
+    <span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"$i: [lindex $foo_list $i]"</span>
+}
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">0: item1</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">1: item2</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">2: item3</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org85ef378" class="outline-3">
+<h3 id="org85ef378"><span class="section-number-3">7.3.</span> Array</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+Array is like hash which carries key-value pair for its items. An array is initialized with array set command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">array</span> <span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo_arr</span> {a 97 b 98 2 4 3 9}
+</pre>
+</div>
+
+<p>
+Dereferencing array elements:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">array</span> get foo_arr               ;<span style="font-weight: bold; font-style: italic;"># a 97 2 4 b 98 3 9</span>
+<span style="font-weight: bold;">puts</span> $<span style="font-weight: bold; font-style: italic;">foo_arr</span>(a)                ;<span style="font-weight: bold; font-style: italic;"># 97</span>
+</pre>
+</div>
+
+<p>
+Iterate over array elements:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">foreach</span> {k v} [<span style="font-weight: bold;">array</span> get foo_arr] {
+    <span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"key: $k, value: $v"</span>
+}
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">key: a, value: 97</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">key: 2, value: 4</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">key: b, value: 98</span>
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">key: 3, value: 9</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org17f348e" class="outline-2">
+<h2 id="org17f348e"><span class="section-number-2">8.</span> File handling</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+The open and close commands are used to open and close files respectively. open returns a channel no.(file descriptor) to work with.
+</p>
+</div>
+
+<div id="outline-container-orgd9600a2" class="outline-3">
+<h3 id="orgd9600a2"><span class="section-number-3">8.1.</span> Writing:</h3>
+<div class="outline-text-3" id="text-8-1">
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">fd</span> [<span style="font-weight: bold;">open</span> <span style="font-style: italic;">"gv.txt"</span> w]
+<span style="font-weight: bold;">puts</span> $<span style="font-weight: bold; font-style: italic;">fd</span> <span style="font-style: italic;">"line 1"</span>
+<span style="font-weight: bold;">puts</span> $<span style="font-weight: bold; font-style: italic;">fd</span> <span style="font-style: italic;">"line 2"</span>
+<span style="font-weight: bold;">close</span> $<span style="font-weight: bold; font-style: italic;">fd</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1010cc6" class="outline-3">
+<h3 id="org1010cc6"><span class="section-number-3">8.2.</span> Reading:</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">fd</span> [<span style="font-weight: bold;">open</span> <span style="font-style: italic;">"gv.txt"</span> r]
+<span style="font-weight: bold;">while</span> {[<span style="font-weight: bold;">gets</span> $<span style="font-weight: bold; font-style: italic;">fd</span> rd_line] &gt;= 0} {
+    <span style="font-weight: bold;">puts</span> $<span style="font-weight: bold; font-style: italic;">rd_line</span>
+}
+<span style="font-weight: bold;">close</span> $<span style="font-weight: bold; font-style: italic;">fd</span>
+</pre>
+</div>
+
+<p>
+Three channels i.e. stdin, stdout and stderr are opened by default. You may use these directly.
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">puts</span> stderr <span style="font-style: italic;">"some warning or error"</span> ;<span style="font-weight: bold; font-style: italic;"># prints message on stderr</span>
+<span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">foo</span> [<span style="font-weight: bold;">gets</span> stdin]                ;<span style="font-weight: bold; font-style: italic;"># prompts user to input value for foo</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org400346c" class="outline-2">
+<h2 id="org400346c"><span class="section-number-2">9.</span> Exceptions</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+For robustness of our code, we should catch any possible exceptions and work accordingly. catch command helps in catching exceptions:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">if</span> {[<span style="font-weight: bold;">catch</span> {<span style="font-weight: bold;">expr</span> {1/0}} err_msg]} {
+    <span style="font-weight: bold;">error</span> <span style="font-style: italic;">"error in expression: $err_msg"</span>
+}
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">error in expression: divide by zero</span>
+</pre>
+</div>
+
+<p>
+Note that catch returns 0 if there is no exception, else 1. Corresponding error message is captured in err<sub>msg</sub>. error command reports the error on stderr and <i>aborts</i> the execution.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd856265" class="outline-2">
+<h2 id="orgd856265"><span class="section-number-2">10.</span> Running a script</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+TCL scripts are regular text files and generally carry <code>.tcl</code> extension. source command helps evaluates a script in a running TCL interpreter. So, you can have your custom procs in one file and source it in your main file:
+</p>
+
+<p>
+file myprocs.tcl:
+</p>
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold;">proc</span> <span style="font-weight: bold;">fact</span> {n} {
+
+    <span style="font-weight: bold;">if</span> {$<span style="font-weight: bold; font-style: italic;">n</span> == 1} {
+        <span style="font-weight: bold;">return</span> 1
+    }
+    <span style="font-weight: bold;">return</span> [<span style="font-weight: bold;">expr</span> {$<span style="font-weight: bold; font-style: italic;">n</span> * [fact [<span style="font-weight: bold;">expr</span> {$<span style="font-weight: bold; font-style: italic;">n</span>-1}]]}]
+}
+</pre>
+</div>
+
+<p>
+file main.tcl: argc variable contains the no. of commandline arguments passed and argv list variable contains the arguments.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-tcl"><span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">!/usr/bin/env tclsh</span>
+
+<span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">argument checking</span>
+<span style="font-weight: bold;">if</span> {$<span style="font-weight: bold; font-style: italic;">argc</span> &lt; 1} {
+    <span style="font-weight: bold;">error</span> <span style="font-style: italic;">"pass an integer"</span>
+} <span style="font-weight: bold;">elseif</span> {$<span style="font-weight: bold; font-style: italic;">argc</span> &gt; 1} {
+    <span style="font-weight: bold;">error</span> <span style="font-style: italic;">"too many arguments, pass just one integer"</span>
+} <span style="font-weight: bold;">else</span> {
+    <span style="font-weight: bold; font-style: italic;"># check if argument is integer or not</span>
+    <span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">num</span> [<span style="font-weight: bold;">lindex</span> $<span style="font-weight: bold; font-style: italic;">argv</span> 0]
+    <span style="font-weight: bold;">if</span> {![<span style="font-weight: bold;">string</span> is integer $<span style="font-weight: bold; font-style: italic;">num</span>]} {
+        <span style="font-weight: bold;">error</span> <span style="font-style: italic;">"$num is not an integer"</span>
+    }
+}
+
+<span style="font-weight: bold;">source</span> ./myprocs.tcl
+
+<span style="font-weight: bold;">puts</span> <span style="font-style: italic;">"factorial of $num: [fact $num]"</span>
+</pre>
+</div>
+
+<p>
+Running script on bash shell:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">&gt; ls
+main.tcl  myprocs.tcl
+&gt; chmod u+x main.tcl
+&gt; ./main.tcl 5
+factorial of 5: 120
+</pre>
+</div>
+
+<p>
+This is just basic introduction to TCL but I hope it will get you started! Thanks!
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="footer">
+  <p>Generated using Emacs Org-Mode</p>
+  <div id="nav">
+    <span>
+      &copy sdsays <script>document.write(new Date().getFullYear())</script>.
+      <a href="https://www.github.com/sdsays"><i class="fab fa-github-square"></i></a>
+    </span>
+  </div>
+</div>
+</div>
+</body>
+</html>
