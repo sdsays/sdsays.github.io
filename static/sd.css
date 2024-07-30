@@ -1,3 +1,11 @@
 body {
-    font-family: 'Hanuman', sans-serif;
+    font-family: "Hanuman", sans-serif;
+}
+
+code,kbd,pre,samp,.priority,.tag,.org-src-container,.done,.todo {
+    font-family: "Fira Code", monospace;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Hanuman", sans-serif;
 }

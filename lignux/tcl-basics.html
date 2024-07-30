@@ -3,14 +3,16 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-07-29 Mon 22:51 -->
+<!-- 2024-07-30 Tue 18:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>TCL Basics</title>
 <meta name="author" content="sd" />
 <meta name="generator" content="Org Mode" />
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hanuman|Georgia|Helvetica|monospace">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crosorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Hanuman:wght@100;300;400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/static/gongzhitaao.css"/>
 <link rel="stylesheet" type="text/css" href="/static/sd.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -37,8 +39,8 @@
 <div id="content" class="content">
 <h1 class="title">TCL Basics</h1>
 
-<div id="outline-container-org7955bfe" class="outline-2">
-<h2 id="org7955bfe"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orgeebe704" class="outline-2">
+<h2 id="orgeebe704"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 TCL commands' general syntax is:
@@ -67,8 +69,8 @@ Here -nonewline and channelId are optional and carry their default (channelId is
 </div>
 </div>
 
-<div id="outline-container-org1c1058a" class="outline-2">
-<h2 id="org1c1058a"><span class="section-number-2">2.</span> Printing to stdout</h2>
+<div id="outline-container-org42277b0" class="outline-2">
+<h2 id="org42277b0"><span class="section-number-2">2.</span> Printing to stdout</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Command puts prints to stdout by default:
@@ -80,8 +82,8 @@ Command puts prints to stdout by default:
 </div>
 </div>
 
-<div id="outline-container-org6937989" class="outline-2">
-<h2 id="org6937989"><span class="section-number-2">3.</span> Comments</h2>
+<div id="outline-container-org925d7c7" class="outline-2">
+<h2 id="org925d7c7"><span class="section-number-2">3.</span> Comments</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Lines starting with hash (#) are considered as comments:
@@ -101,8 +103,8 @@ For inline comment, the statement should be terminated with semicolon first:
 </div>
 </div>
 
-<div id="outline-container-org0088b5a" class="outline-2">
-<h2 id="org0088b5a"><span class="section-number-2">4.</span> Variables and Expressions</h2>
+<div id="outline-container-org53169d8" class="outline-2">
+<h2 id="org53169d8"><span class="section-number-2">4.</span> Variables and Expressions</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Variables are defined using set command. They can be dereferenced either with $varname or by set command:
@@ -181,8 +183,8 @@ Note that "" and {}, both doing the job for format. This is because we just need
 </div>
 </div>
 
-<div id="outline-container-org8d6f58e" class="outline-2">
-<h2 id="org8d6f58e"><span class="section-number-2">5.</span> Procedures  Functions</h2>
+<div id="outline-container-orge6579ae" class="outline-2">
+<h2 id="orge6579ae"><span class="section-number-2">5.</span> Procedures  Functions</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Procedures(Functions) are defined with proc command. Please note that proc (and other constructs which require braces for body) requires opening brace for body i.e. { on the same line as the command. So, there is only one correct way to do it!
@@ -229,8 +231,8 @@ Only trailing parameters (yes, multiple) can be optional. Definition with an opt
 </div>
 </div>
 
-<div id="outline-container-orgf6f7d78" class="outline-2">
-<h2 id="orgf6f7d78"><span class="section-number-2">6.</span> Control flow</h2>
+<div id="outline-container-org35e74d9" class="outline-2">
+<h2 id="org35e74d9"><span class="section-number-2">6.</span> Control flow</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Control flow is supported with if-elseif-else, switch, for, foreach, while, break and continue constructs.
@@ -241,8 +243,8 @@ The expression inside {} for if, for and while statements is already evaluated b
 </p>
 </div>
 
-<div id="outline-container-org2b978da" class="outline-3">
-<h3 id="org2b978da"><span class="section-number-3">6.1.</span> if-elseif-else</h3>
+<div id="outline-container-orgb74f4c6" class="outline-3">
+<h3 id="orgb74f4c6"><span class="section-number-3">6.1.</span> if-elseif-else</h3>
 <div class="outline-text-3" id="text-6-1">
 <div class="org-src-container">
 <pre class="src src-tcl"><span style="font-weight: bold;">if</span> {!($<span style="font-weight: bold; font-style: italic;">num</span> % 2)} {
@@ -257,8 +259,8 @@ The expression inside {} for if, for and while statements is already evaluated b
 </div>
 </div>
 
-<div id="outline-container-org5455c33" class="outline-3">
-<h3 id="org5455c33"><span class="section-number-3">6.2.</span> switch</h3>
+<div id="outline-container-orgdf48a29" class="outline-3">
+<h3 id="orgdf48a29"><span class="section-number-3">6.2.</span> switch</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Syntax:
@@ -301,8 +303,8 @@ Example:
 </div>
 </div>
 
-<div id="outline-container-org17f57dd" class="outline-3">
-<h3 id="org17f57dd"><span class="section-number-3">6.3.</span> while</h3>
+<div id="outline-container-org403a8f6" class="outline-3">
+<h3 id="org403a8f6"><span class="section-number-3">6.3.</span> while</h3>
 <div class="outline-text-3" id="text-6-3">
 <div class="org-src-container">
 <pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">i</span> 10
@@ -323,8 +325,8 @@ Example:
 </div>
 </div>
 
-<div id="outline-container-org334c5de" class="outline-3">
-<h3 id="org334c5de"><span class="section-number-3">6.4.</span> for</h3>
+<div id="outline-container-orgbc5c97c" class="outline-3">
+<h3 id="orgbc5c97c"><span class="section-number-3">6.4.</span> for</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 General syntax:
@@ -349,8 +351,8 @@ Example:
 </div>
 </div>
 
-<div id="outline-container-org754c938" class="outline-3">
-<h3 id="org754c938"><span class="section-number-3">6.5.</span> foreach</h3>
+<div id="outline-container-org1d1082e" class="outline-3">
+<h3 id="org1d1082e"><span class="section-number-3">6.5.</span> foreach</h3>
 <div class="outline-text-3" id="text-6-5">
 <div class="org-src-container">
 <pre class="src src-tcl"><span style="font-weight: bold;">foreach</span> i {1 2 3} {
@@ -364,16 +366,16 @@ Example:
 </div>
 
 
-<div id="outline-container-orgdfbcde7" class="outline-2">
-<h2 id="orgdfbcde7"><span class="section-number-2">7.</span> Data Structures</h2>
+<div id="outline-container-orgb32d2e0" class="outline-2">
+<h2 id="orgb32d2e0"><span class="section-number-2">7.</span> Data Structures</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 We will look at three data structures now: string, list and array.
 </p>
 </div>
 
-<div id="outline-container-org340b7fc" class="outline-3">
-<h3 id="org340b7fc"><span class="section-number-3">7.1.</span> String</h3>
+<div id="outline-container-orgefbf5e0" class="outline-3">
+<h3 id="orgefbf5e0"><span class="section-number-3">7.1.</span> String</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 A string is initialized with double quotes (""):
@@ -396,8 +398,8 @@ You may perform operations on strings with string command:
 </div>
 </div>
 
-<div id="outline-container-org9a4eb93" class="outline-3">
-<h3 id="org9a4eb93"><span class="section-number-3">7.2.</span> List</h3>
+<div id="outline-container-org5fd65d3" class="outline-3">
+<h3 id="org5fd65d3"><span class="section-number-3">7.2.</span> List</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 List is like an array in C. Initialize a list variable as
@@ -441,8 +443,8 @@ or:
 </div>
 </div>
 
-<div id="outline-container-org85ef378" class="outline-3">
-<h3 id="org85ef378"><span class="section-number-3">7.3.</span> Array</h3>
+<div id="outline-container-org8335df6" class="outline-3">
+<h3 id="org8335df6"><span class="section-number-3">7.3.</span> Array</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 Array is like hash which carries key-value pair for its items. An array is initialized with array set command:
@@ -481,16 +483,16 @@ Iterate over array elements:
 </div>
 </div>
 
-<div id="outline-container-org17f348e" class="outline-2">
-<h2 id="org17f348e"><span class="section-number-2">8.</span> File handling</h2>
+<div id="outline-container-org22d1e71" class="outline-2">
+<h2 id="org22d1e71"><span class="section-number-2">8.</span> File handling</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 The open and close commands are used to open and close files respectively. open returns a channel no.(file descriptor) to work with.
 </p>
 </div>
 
-<div id="outline-container-orgd9600a2" class="outline-3">
-<h3 id="orgd9600a2"><span class="section-number-3">8.1.</span> Writing:</h3>
+<div id="outline-container-org58a6c69" class="outline-3">
+<h3 id="org58a6c69"><span class="section-number-3">8.1.</span> Writing:</h3>
 <div class="outline-text-3" id="text-8-1">
 <div class="org-src-container">
 <pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">fd</span> [<span style="font-weight: bold;">open</span> <span style="font-style: italic;">"gv.txt"</span> w]
@@ -502,8 +504,8 @@ The open and close commands are used to open and close files respectively. open 
 </div>
 </div>
 
-<div id="outline-container-org1010cc6" class="outline-3">
-<h3 id="org1010cc6"><span class="section-number-3">8.2.</span> Reading:</h3>
+<div id="outline-container-org70d3948" class="outline-3">
+<h3 id="org70d3948"><span class="section-number-3">8.2.</span> Reading:</h3>
 <div class="outline-text-3" id="text-8-2">
 <div class="org-src-container">
 <pre class="src src-tcl"><span style="font-weight: bold;">set</span> <span style="font-weight: bold; font-style: italic;">fd</span> [<span style="font-weight: bold;">open</span> <span style="font-style: italic;">"gv.txt"</span> r]
@@ -526,8 +528,8 @@ Three channels i.e. stdin, stdout and stderr are opened by default. You may use 
 </div>
 </div>
 
-<div id="outline-container-org400346c" class="outline-2">
-<h2 id="org400346c"><span class="section-number-2">9.</span> Exceptions</h2>
+<div id="outline-container-orgc6d92db" class="outline-2">
+<h2 id="orgc6d92db"><span class="section-number-2">9.</span> Exceptions</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 For robustness of our code, we should catch any possible exceptions and work accordingly. catch command helps in catching exceptions:
@@ -546,8 +548,8 @@ Note that catch returns 0 if there is no exception, else 1. Corresponding error 
 </div>
 </div>
 
-<div id="outline-container-orgd856265" class="outline-2">
-<h2 id="orgd856265"><span class="section-number-2">10.</span> Running a script</h2>
+<div id="outline-container-org37e704f" class="outline-2">
+<h2 id="org37e704f"><span class="section-number-2">10.</span> Running a script</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 TCL scripts are regular text files and generally carry <code>.tcl</code> extension. source command helps evaluates a script in a running TCL interpreter. So, you can have your custom procs in one file and source it in your main file:
